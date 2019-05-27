@@ -12,7 +12,7 @@ public class Client extends Application {
 
     public void start(Stage primaryStage){
         try {
-            AnchorPane root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/MainScreen.fxml"));
+            AnchorPane root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/LoginScreen.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();

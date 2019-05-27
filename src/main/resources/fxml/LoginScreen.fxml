@@ -6,13 +6,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="217.0" prefWidth="341.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.LoginScreen">
+<AnchorPane prefHeight="217.0" prefWidth="341.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginScreenController">
    <children>
       <Label layoutX="143.0" layoutY="14.0" prefHeight="45.0" prefWidth="107.0" text="Login" />
-      <TextField layoutX="127.0" layoutY="59.0" prefHeight="31.0" prefWidth="177.0" />
+      <TextField fx:id="txtUsername" layoutX="127.0" layoutY="59.0" prefHeight="31.0" prefWidth="177.0" />
       <Label layoutX="22.0" layoutY="64.0" text="Username" />
-      <PasswordField layoutX="127.0" layoutY="117.0" prefHeight="31.0" prefWidth="177.0" />
+      <PasswordField fx:id="txtPassword" layoutX="127.0" layoutY="117.0" prefHeight="31.0" prefWidth="177.0" />
       <Label layoutX="22.0" layoutY="122.0" text="Password" />
-      <Button layoutX="143.0" layoutY="172.0" mnemonicParsing="false" text="Button" />
+      <Button fx:id="btnLogin" layoutX="143.0" layoutY="172.0" mnemonicParsing="false" onAction="#login" text="Login" />
    </children>
 </AnchorPane>
