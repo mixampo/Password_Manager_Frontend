@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="483.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainScreenController">
+    <children>
+        <TabPane layoutY="-1.0" prefHeight="483.0" prefWidth="748.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Generate password">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="407.0" prefWidth="600.0">
+                            <children>
+                                <ChoiceBox layoutX="106.0" layoutY="31.0" prefHeight="31.0" prefWidth="587.0" />
+                                <Label layoutX="36.0" layoutY="36.0" prefHeight="21.0" prefWidth="70.0" text="Profile:" />
+                                <RadioButton layoutX="261.0" layoutY="93.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="239.0" text="Create using specific characters" />
+                                <RadioButton layoutX="194.0" layoutY="232.0" mnemonicParsing="false" text="Create using selected profile" />
+                                <CheckBox layoutX="200.0" layoutY="146.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="166.0" text="Upper-case (A,B,C...)" />
+                                <CheckBox layoutX="200.0" layoutY="186.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="157.0" text="Lower-case (a,b,c...)" />
+                                <CheckBox layoutX="448.0" layoutY="186.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="136.0" text="Digits (0,1,2...)" />
+                                <CheckBox layoutX="448.0" layoutY="146.0" mnemonicParsing="false" text="Special (!,@,$...)" />
+                                <Button layoutX="324.0" layoutY="284.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="113.0" text="Generate" />
+                                <ListView layoutX="10.0" layoutY="330.0" prefHeight="91.0" prefWidth="722.0" />
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Password management">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="tvPasswordSet" layoutX="8.0" layoutY="4.0" prefHeight="347.0" prefWidth="730.0">
+                                    <columns>
+                                        <TableColumn fx:id="id" prefWidth="57.0" text="id" />
+                                        <TableColumn fx:id="password" prefWidth="167.0" text="password" />
+                                        <TableColumn fx:id="title" prefWidth="105.0" text="title" />
+                                        <TableColumn fx:id="websiteUrl" prefWidth="131.0" text="websiteUrl" />
+                              <TableColumn fx:id="description" prefWidth="269.0" text="description" />
+                                    </columns>
+                                </TableView>
+                                <Button fx:id="btnDeletePasswordSetFromDb" layoutX="608.0" layoutY="399.0" mnemonicParsing="false" onAction="#deletePasswordSet" text="Delete password" />
+                                <Button fx:id="btnEditPassword" layoutX="608.0" layoutY="360.0" mnemonicParsing="false" onAction="#setPasswordToEditFields" prefHeight="31.0" prefWidth="130.0" text="Edit password" />
+                        <Button fx:id="btnRetrievePasswordsFromDb" layoutX="8.0" layoutY="399.0" mnemonicParsing="false" onAction="#getPasswordSets" prefHeight="31.0" prefWidth="168.0" text="Retrieve passwords" />
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+            <Tab text="Add/update password">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="txtPassword" layoutX="162.0" layoutY="39.0" prefHeight="31.0" prefWidth="485.0" />
+                        <Label layoutX="23.0" layoutY="41.0" prefHeight="26.0" prefWidth="87.0" text="Password" />
+                        <TextField fx:id="txtTitle" layoutX="162.0" layoutY="113.0" prefHeight="31.0" prefWidth="486.0" />
+                        <Label layoutX="23.0" layoutY="118.0" prefHeight="21.0" prefWidth="69.0" text="Title" />
+                        <TextField fx:id="txtUrl" layoutX="161.0" layoutY="191.0" prefHeight="31.0" prefWidth="488.0" />
+                        <Label layoutX="23.0" layoutY="196.0" prefHeight="21.0" prefWidth="63.0" text="URL" />
+                        <Label layoutX="27.0" layoutY="262.0" prefHeight="21.0" prefWidth="79.0" text="Description" />
+                        <TextArea fx:id="txtDescription" layoutX="161.0" layoutY="244.0" prefHeight="112.0" prefWidth="488.0" />
+                        <Button fx:id="btnAddPasswordToDb" layoutX="161.0" layoutY="368.0" mnemonicParsing="false" onAction="#addPasswordSet" prefHeight="31.0" prefWidth="197.0" text="Add password" />
+                        <Label fx:id="lblPasswordAdded" layoutX="297.0" layoutY="409.0" />
+                        <Button fx:id="btnUpdateEditedPassword" disable="true" layoutX="453.0" layoutY="368.0" mnemonicParsing="false" onAction="#updatePassword" prefHeight="31.0" prefWidth="196.0" text="Update password" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>
