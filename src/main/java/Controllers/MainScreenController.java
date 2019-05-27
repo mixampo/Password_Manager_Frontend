@@ -38,6 +38,7 @@ public class MainScreenController implements Initializable {
     public Label lblPasswordAdded;
     public Button btnEditPassword;
     public Button btnUpdateEditedPassword;
+    public Button generatePassword;
 
     private IApiCallService apiCallService = new ApiCallService();
     private ObservableList<PasswordSet> PasswordSets;
@@ -102,6 +103,9 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    public void generatePassword(ActionEvent actionEvent) {
+    }
+
     public void update(){
         txtPassword.clear();
         txtTitle.clear();
@@ -111,6 +115,4 @@ public class MainScreenController implements Initializable {
         btnAddPasswordToDb.setDisable(false);
         //lblPasswordAdded.setText("");
     }
-
-
 }

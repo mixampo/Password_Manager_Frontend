@@ -30,7 +30,7 @@
                                 <CheckBox layoutX="200.0" layoutY="186.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="157.0" text="Lower-case (a,b,c...)" />
                                 <CheckBox layoutX="448.0" layoutY="186.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="136.0" text="Digits (0,1,2...)" />
                                 <CheckBox layoutX="448.0" layoutY="146.0" mnemonicParsing="false" text="Special (!,@,$...)" />
-                                <Button layoutX="324.0" layoutY="284.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="113.0" text="Generate" />
+                                <Button fx:id="generatePassword" layoutX="283.0" layoutY="286.0" mnemonicParsing="false" onAction="#generatePassword" prefHeight="31.0" prefWidth="166.0" text="Generate password" />
                                 <ListView layoutX="10.0" layoutY="330.0" prefHeight="91.0" prefWidth="722.0" />
                             </children></AnchorPane>
                     </content>
