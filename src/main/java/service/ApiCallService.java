@@ -28,7 +28,7 @@ public class ApiCallService implements IApiCallService {
         //ObjectMapper mapper = new ObjectMapper();
 
         //TODO inlogen implementeren
-        User user = new User(1, "Tommen", 39535);
+        User user = new User(1, "Tommen", "wr45y7");
 
         //PasswordSet passwordSet = new PasswordSet(password, title, websiteeUrl, description, user);
         //String jsonString = mapper.writeValueAsString(passwordSet);

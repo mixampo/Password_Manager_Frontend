@@ -12,19 +12,19 @@ public class User {
     @JsonProperty("userName")
     private String userName;
 
-    @JsonProperty("loginKey")
-    private int loginKey;
+    @JsonProperty("password")
+    private String password;
 
     public User(){}
 
-    public User(int id, String userName, int loginKey){
+    public User(int id, String userName, String password){
         this.id = id;
         this.userName = userName;
-        this.loginKey = loginKey;
+        this.password = password;
     }
 
-    public User(String userName, int loginKey){
+    public User(String userName, String password){
         this.userName = userName;
-        this.loginKey = loginKey;
+        this.password = password;
     }
 }

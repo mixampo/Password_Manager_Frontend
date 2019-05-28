@@ -1,5 +1,7 @@
 package Controllers;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import service.ILoginCallService;
@@ -31,16 +34,17 @@ public class LoginScreenController implements Initializable {
 
 
     public void login(ActionEvent actionEvent) throws IOException {
-        if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()){
+        if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
             System.out.println("kek");
-        }
-        else{
+        } else {
+            loginCallService.loginAndAuthenticate(txtUsername.getText(), txtPassword.getText());
             Parent mainScreenParent = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/MainScreen.fxml"));
             Scene mainScreenScene = new Scene(mainScreenParent);
 
             //Get stage information
-            Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             window.setScene(mainScreenScene);
             window.show();
         }
-}   }
+    }
+}
