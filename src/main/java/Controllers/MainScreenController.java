@@ -66,7 +66,7 @@ public class MainScreenController implements Initializable {
 
     public void getPasswordSets(ActionEvent actionEvent){
         try {
-            PasswordSets = FXCollections.observableList(apiCallService.getPasswordSets());
+            PasswordSets = FXCollections.observableList(apiCallService.getPasswordSets(1));
             tvPasswordSet.setItems(PasswordSets);
             update();
         } catch (IOException e) {

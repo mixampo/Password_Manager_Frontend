@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -34,17 +35,24 @@ public class LoginScreenController implements Initializable {
 
 
     public void login(ActionEvent actionEvent) throws IOException {
-        if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
-            System.out.println("kek");
-        } else {
-            loginCallService.loginAndAuthenticate(txtUsername.getText(), txtPassword.getText());
-            Parent mainScreenParent = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/MainScreen.fxml"));
-            Scene mainScreenScene = new Scene(mainScreenParent);
+        if (!txtUsername.getText().isEmpty() && !txtPassword.getText().isEmpty()) {
+            if (loginCallService.loginAndAuthenticate(txtUsername.getText(), txtPassword.getText())){
+                Parent mainScreenParent = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/MainScreen.fxml"));
+                Scene mainScreenScene = new Scene(mainScreenParent);
 
-            //Get stage information
-            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            window.setScene(mainScreenScene);
-            window.show();
+                //Get stage information
+                Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                window.setScene(mainScreenScene);
+                window.show();
+            }
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Wrong credentials");
+            alert.setHeaderText(null);
+            alert.setContentText("The username and or password you gave is/are incorrect!");
+
+            alert.showAndWait();
         }
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IApiCallService {
     void addPasswordSet(String password, String title, String websiteeUrl, String description);
-    List<PasswordSet> getPasswordSets() throws IOException;
+    List<PasswordSet> getPasswordSets(int id) throws IOException;
     void deletePasswordSet(PasswordSet passwordSet);
     void updatePasswordSet(PasswordSet currentPasswordSet);
 }

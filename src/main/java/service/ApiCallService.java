@@ -35,10 +35,15 @@ public class ApiCallService implements IApiCallService {
         restTemplate.postForObject(uri, new PasswordSet(password, title, websiteeUrl, description, user), PasswordSet.class);
     }
 
-    public List<PasswordSet> getPasswordSets() throws IOException {
+    public List<PasswordSet> getPasswordSets(int id) throws IOException {
 
-        final String uri = "http://localhost:8080/passwordsets/";
-        String jsonString = restTemplate.getForObject(uri, String.class);
+        final String uri = "http://localhost:8080/passwordsets/{id}";
+
+        Map<String, Integer> params = new HashMap<>();
+
+        params.put("id", id);
+
+        String jsonString = restTemplate.getForObject(uri, String.class, params);
         ObjectMapper mapper = new ObjectMapper();
 
         List<PasswordSet> passwordSets = mapper.readValue(jsonString, new TypeReference<ArrayList<PasswordSet>>() {
