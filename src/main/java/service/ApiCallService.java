@@ -70,4 +70,12 @@ public class ApiCallService implements IApiCallService {
 
         restTemplate.put(uri, currentPasswordSet, params);
     }
+
+    public String getGeneratedHexKey(){
+        final String uri = "http://localhost:8080/generatepassword";
+
+        String password = restTemplate.getForObject(uri, String.class);
+
+        return password;
+    }
 }

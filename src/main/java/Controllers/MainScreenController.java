@@ -39,6 +39,9 @@ public class MainScreenController implements Initializable {
     public Button btnEditPassword;
     public Button btnUpdateEditedPassword;
     public Button generatePassword;
+    public RadioButton rbGetPasswordByUserSpecification;
+    public RadioButton rbGetRandomHexKey;
+    public ListView lvGeneratedPassword;
 
     private IApiCallService apiCallService = new ApiCallService();
     private ObservableList<PasswordSet> PasswordSets;
@@ -99,11 +102,28 @@ public class MainScreenController implements Initializable {
             btnAddPasswordToDb.setDisable(true);
         }
         else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("No password selected");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a password");
 
+            alert.showAndWait();
         }
     }
 
     public void generatePassword(ActionEvent actionEvent) {
+        if (rbGetRandomHexKey.isSelected()){
+            lvGeneratedPassword.getItems().add(apiCallService.getGeneratedHexKey());
+        }
+    }
+
+    public void changeSelection(ActionEvent actionEvent) {
+        if (rbGetRandomHexKey.isSelected()){
+            rbGetPasswordByUserSpecification.setSelected(false);
+        }
+        else if (rbGetPasswordByUserSpecification.isSelected()){
+            rbGetRandomHexKey.setSelected(false);
+        }
     }
 
     public void update(){
