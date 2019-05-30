@@ -42,9 +42,16 @@ public class MainScreenController implements Initializable {
     public RadioButton rbGetPasswordByUserSpecification;
     public RadioButton rbGetRandomHexKey;
     public ListView lvGeneratedPassword;
+    public Button btnSetGeneratedPasswordToAddTab;
+    public CheckBox cbUpperCase;
+    public CheckBox cbLowerCase;
+    public CheckBox cbDigits;
+    public CheckBox cbSpecialChar;
 
     private IApiCallService apiCallService = new ApiCallService();
     private ObservableList<PasswordSet> PasswordSets;
+    private Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
 
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,13 +64,15 @@ public class MainScreenController implements Initializable {
 
     public void addPasswordSet(ActionEvent actionEvent) {
         if (txtPassword.getText().isEmpty()){
-            lblPasswordAdded.setText("Password field cannot be empty!");
-            lblPasswordAdded.setTextFill(Color.web("#f90000"));
+            alert.setTitle("No password");
+            alert.setHeaderText(null);
+            alert.setContentText("Password field cannot be empty!");
+
+            alert.showAndWait();
         }
         else{
             apiCallService.addPasswordSet(txtPassword.getText(), txtTitle.getText(), txtUrl.getText(), txtDescription.getText());
-            lblPasswordAdded.setText("Added password to database");
-            lblPasswordAdded.setTextFill(Color.web("#56e200"));
+            update();
         }
     }
 
@@ -102,7 +111,6 @@ public class MainScreenController implements Initializable {
             btnAddPasswordToDb.setDisable(true);
         }
         else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("No password selected");
             alert.setHeaderText(null);
             alert.setContentText("Please select a password");
@@ -124,6 +132,39 @@ public class MainScreenController implements Initializable {
         else if (rbGetPasswordByUserSpecification.isSelected()){
             rbGetRandomHexKey.setSelected(false);
         }
+    }
+
+    public void addGeneratedPasswordToAddTab(ActionEvent actionEvent) {
+        if (lvGeneratedPassword.getSelectionModel().getSelectedItem() != null){
+            txtPassword.setText(lvGeneratedPassword.getSelectionModel().getSelectedItem().toString());
+        }
+        else {
+            alert.setTitle("No password selected");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a password that you want to use");
+
+            alert.showAndWait();
+        }
+    }
+
+    public void cbUpperCaseHandler(ActionEvent actionEvent) {
+        rbGetRandomHexKey.setSelected(false);
+        rbGetPasswordByUserSpecification.setSelected(true);
+    }
+
+    public void cbLowerCaseHandler(ActionEvent actionEvent) {
+        rbGetRandomHexKey.setSelected(false);
+        rbGetPasswordByUserSpecification.setSelected(true);
+    }
+
+    public void cbDigitsHandler(ActionEvent actionEvent) {
+        rbGetRandomHexKey.setSelected(false);
+        rbGetPasswordByUserSpecification.setSelected(true);
+    }
+
+    public void cbSpecialCharHandler(ActionEvent actionEvent) {
+        rbGetRandomHexKey.setSelected(false);
+        rbGetPasswordByUserSpecification.setSelected(true);
     }
 
     public void update(){
