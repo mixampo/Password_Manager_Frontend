@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import models.PasswordSet;
 import org.springframework.beans.PropertyValue;
@@ -47,6 +48,7 @@ public class MainScreenController implements Initializable {
     public CheckBox cbLowerCase;
     public CheckBox cbDigits;
     public CheckBox cbSpecialChar;
+    public ChoiceBox cbBitSize;
 
     private IApiCallService apiCallService = new ApiCallService();
     private ObservableList<PasswordSet> PasswordSets;
@@ -60,6 +62,7 @@ public class MainScreenController implements Initializable {
         title.setCellValueFactory(new PropertyValueFactory<>("title"));
         websiteUrl.setCellValueFactory(new PropertyValueFactory<>("websiteUrl"));
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
+        cbBitSize.getItems().addAll("128", "192", "256");
     }
 
     public void addPasswordSet(ActionEvent actionEvent) {
@@ -120,8 +123,18 @@ public class MainScreenController implements Initializable {
     }
 
     public void generatePassword(ActionEvent actionEvent) {
-        if (rbGetRandomHexKey.isSelected()){
-            lvGeneratedPassword.getItems().add(apiCallService.getGeneratedHexKey());
+        if (rbGetRandomHexKey.isSelected() && !cbBitSize.getSelectionModel().isSelected(-1)){
+            lvGeneratedPassword.getItems().add(apiCallService.getGeneratedHexKey(Integer.parseInt(cbBitSize.getValue().toString())));
+        }
+        else if (rbGetPasswordByUserSpecification.isSelected()){
+
+        }
+        else {
+            alert.setTitle("Selection chosen");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a way for the generator to generate a password");
+
+            alert.showAndWait();
         }
     }
 
@@ -165,6 +178,12 @@ public class MainScreenController implements Initializable {
     public void cbSpecialCharHandler(ActionEvent actionEvent) {
         rbGetRandomHexKey.setSelected(false);
         rbGetPasswordByUserSpecification.setSelected(true);
+    }
+
+
+    public void changeToHex(MouseEvent mouseEvent) {
+        rbGetRandomHexKey.setSelected(true);
+        rbGetPasswordByUserSpecification.setSelected(false);
     }
 
     public void update(){

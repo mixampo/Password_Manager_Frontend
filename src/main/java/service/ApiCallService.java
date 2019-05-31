@@ -71,11 +71,13 @@ public class ApiCallService implements IApiCallService {
         restTemplate.put(uri, currentPasswordSet, params);
     }
 
-    public String getGeneratedHexKey(){
-        final String uri = "http://localhost:8080/generatepassword";
+    public String getGeneratedHexKey(int bitSize){
+        final String uri = "http://localhost:8080/generatepassword/{bitSize}";
 
-        String password = restTemplate.getForObject(uri, String.class);
+        Map<String, Integer> params = new HashMap<>();
 
-        return password;
+        params.put("bitSize", bitSize);
+
+        return restTemplate.getForObject(uri, String.class, params);
     }
 }

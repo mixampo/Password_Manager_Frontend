@@ -12,5 +12,5 @@ public interface IApiCallService {
     List<PasswordSet> getPasswordSets(int id) throws IOException;
     void deletePasswordSet(PasswordSet passwordSet);
     void updatePasswordSet(PasswordSet currentPasswordSet);
-    String getGeneratedHexKey();
+    String getGeneratedHexKey(int bitSize);
 }
