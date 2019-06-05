@@ -13,4 +13,5 @@ public interface IApiCallService {
     void deletePasswordSet(PasswordSet passwordSet);
     void updatePasswordSet(PasswordSet currentPasswordSet);
     String getGeneratedHexKey(int bitSize);
+    String getGeneratedPasswordByUserSpecification(boolean upperCase, boolean lowerCase, boolean special, boolean digits, int length);
 }

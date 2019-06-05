@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -22,7 +23,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="470.0" prefWidth="748.0">
                             <children>
-                                <RadioButton fx:id="rbGetPasswordByUserSpecification" layoutX="255.0" layoutY="44.0" mnemonicParsing="false" onAction="#changeSelection" prefHeight="21.0" prefWidth="239.0" text="Create using specific characters" />
+                                <RadioButton fx:id="rbGetPasswordByUserSpecification" layoutX="135.0" layoutY="46.0" mnemonicParsing="false" onAction="#changeSelection" prefHeight="21.0" prefWidth="239.0" text="Create using specific characters" />
                                 <RadioButton fx:id="rbGetRandomHexKey" layoutX="190.0" layoutY="222.0" mnemonicParsing="false" onAction="#changeSelection" prefHeight="21.0" prefWidth="274.0" text="Create random Hex Key" />
                                 <CheckBox fx:id="cbUpperCase" layoutX="196.0" layoutY="104.0" mnemonicParsing="false" onAction="#cbUpperCaseHandler" prefHeight="21.0" prefWidth="166.0" text="Upper-case (A,B,C...)" />
                                 <CheckBox fx:id="cbLowerCase" layoutX="196.0" layoutY="156.0" mnemonicParsing="false" onAction="#cbLowerCaseHandler" prefHeight="21.0" prefWidth="157.0" text="Lower-case (a,b,c...)" />
@@ -33,6 +34,8 @@
                         <Button fx:id="btnSetGeneratedPasswordToAddTab" layoutX="267.0" layoutY="409.0" mnemonicParsing="false" onAction="#addGeneratedPasswordToAddTab" prefHeight="31.0" prefWidth="224.0" text="Use generated password" />
                         <ChoiceBox fx:id="cbBitSize" layoutX="474.0" layoutY="217.0" onDragDone="#changeToHex" prefWidth="150.0" />
                         <Label layoutX="432.0" layoutY="222.0" text="Bitsize" />
+                        <Label layoutX="423.0" layoutY="46.0" text="Length" />
+                        <Spinner fx:id="spPasswordLength" layoutX="474.0" layoutY="41.0" />
                             </children></AnchorPane>
                     </content>
                 </Tab>

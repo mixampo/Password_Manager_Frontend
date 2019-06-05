@@ -39,11 +39,7 @@ public class ApiCallService implements IApiCallService {
 
         final String uri = "http://localhost:8080/passwordsets/{id}";
 
-        Map<String, Integer> params = new HashMap<>();
-
-        params.put("id", id);
-
-        String jsonString = restTemplate.getForObject(uri, String.class, params);
+        String jsonString = restTemplate.getForObject(uri, String.class, id);
         ObjectMapper mapper = new ObjectMapper();
 
         List<PasswordSet> passwordSets = mapper.readValue(jsonString, new TypeReference<ArrayList<PasswordSet>>() {
@@ -55,29 +51,25 @@ public class ApiCallService implements IApiCallService {
     public void deletePasswordSet(PasswordSet passwordSet){
 
         final String uri =  "http://localhost:8080/passwordsets/{id}";
-        Map<String, Integer> params = new HashMap<>();
 
-        params.put("id", passwordSet.getId());
-
-        restTemplate.delete(uri, params);
+        restTemplate.delete(uri, passwordSet.getId());
     }
 
     public void updatePasswordSet(PasswordSet currentPasswordSet){
         final String uri =  "http://localhost:8080/passwordsets/{id}";
-        Map<String, Integer> params = new HashMap<>();
 
-        params.put("id", currentPasswordSet.getId());
-
-        restTemplate.put(uri, currentPasswordSet, params);
+        restTemplate.put(uri, currentPasswordSet, currentPasswordSet.getId());
     }
 
     public String getGeneratedHexKey(int bitSize){
         final String uri = "http://localhost:8080/generatepassword/{bitSize}";
 
-        Map<String, Integer> params = new HashMap<>();
+        return restTemplate.getForObject(uri, String.class, bitSize);
+    }
 
-        params.put("bitSize", bitSize);
+    public String getGeneratedPasswordByUserSpecification(boolean upperCase, boolean lowerCase, boolean special, boolean digits, int length){
+        final String uri = "http://localhost:8080/generatepassword/userspecifiedchar/{length}?uppercase={uppercase}&lowercase={lowercase}&special={special}&digits={digits}";
 
-        return restTemplate.getForObject(uri, String.class, params);
+        return restTemplate.getForObject(uri, String.class, length, upperCase, lowerCase, special, digits);
     }
 }

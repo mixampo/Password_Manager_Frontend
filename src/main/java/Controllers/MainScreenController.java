@@ -49,6 +49,7 @@ public class MainScreenController implements Initializable {
     public CheckBox cbDigits;
     public CheckBox cbSpecialChar;
     public ChoiceBox cbBitSize;
+    public Spinner spPasswordLength;
 
     private IApiCallService apiCallService = new ApiCallService();
     private ObservableList<PasswordSet> PasswordSets;
@@ -63,6 +64,10 @@ public class MainScreenController implements Initializable {
         websiteUrl.setCellValueFactory(new PropertyValueFactory<>("websiteUrl"));
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
         cbBitSize.getItems().addAll("128", "192", "256");
+        final int initialValue = 3;
+        SpinnerValueFactory<Integer> valueFactory = //
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 50, initialValue);
+        spPasswordLength.setValueFactory(valueFactory);
     }
 
     public void addPasswordSet(ActionEvent actionEvent) {
@@ -127,7 +132,8 @@ public class MainScreenController implements Initializable {
             lvGeneratedPassword.getItems().add(apiCallService.getGeneratedHexKey(Integer.parseInt(cbBitSize.getValue().toString())));
         }
         else if (rbGetPasswordByUserSpecification.isSelected()){
-
+            lvGeneratedPassword.getItems().add(apiCallService.getGeneratedPasswordByUserSpecification(cbUpperCase.isSelected(), cbLowerCase.isSelected(),
+                    cbSpecialChar.isSelected(), cbDigits.isSelected(), (Integer)spPasswordLength.getValue()));
         }
         else {
             alert.setTitle("Selection chosen");
