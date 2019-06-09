@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import models.Session;
 import service.ILoginCallService;
 import service.LoginCallService;
 
@@ -36,9 +37,16 @@ public class LoginScreenController implements Initializable {
 
     public void login(ActionEvent actionEvent) throws IOException {
         if (!txtUsername.getText().isEmpty() && !txtPassword.getText().isEmpty()) {
-            if (loginCallService.loginAndAuthenticate(txtUsername.getText(), txtPassword.getText())){
-                Parent mainScreenParent = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/MainScreen.fxml"));
+            Session session = loginCallService.login(txtUsername.getText(), txtPassword.getText());
+            if (session != null){
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getClassLoader().getResource("fxml/MainScreen.fxml"));
+                Parent mainScreenParent = loader.load();
                 Scene mainScreenScene = new Scene(mainScreenParent);
+
+                //Access controller
+                MainScreenController controller = loader.getController();
+                controller.initSession(session);
 
                 //Get stage information
                 Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

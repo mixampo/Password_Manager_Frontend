@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import models.PasswordSet;
+import models.Session;
 import org.springframework.beans.PropertyValue;
 import service.ApiCallService;
 import service.IApiCallService;
@@ -54,6 +55,7 @@ public class MainScreenController implements Initializable {
     private IApiCallService apiCallService = new ApiCallService();
     private ObservableList<PasswordSet> PasswordSets;
     private Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    private Session session;
 
 
 
@@ -70,6 +72,10 @@ public class MainScreenController implements Initializable {
         spPasswordLength.setValueFactory(valueFactory);
     }
 
+    public void initSession(Session session){
+        this.session = session;
+    }
+
     public void addPasswordSet(ActionEvent actionEvent) {
         if (txtPassword.getText().isEmpty()){
             alert.setTitle("No password");
@@ -79,14 +85,14 @@ public class MainScreenController implements Initializable {
             alert.showAndWait();
         }
         else{
-            apiCallService.addPasswordSet(txtPassword.getText(), txtTitle.getText(), txtUrl.getText(), txtDescription.getText());
+            apiCallService.addPasswordSet(txtPassword.getText(), txtTitle.getText(), txtUrl.getText(), txtDescription.getText(), session);
             update();
         }
     }
 
     public void getPasswordSets(ActionEvent actionEvent){
         try {
-            PasswordSets = FXCollections.observableList(apiCallService.getPasswordSets(1));
+            PasswordSets = FXCollections.observableList(apiCallService.getPasswordSets(session));
             tvPasswordSet.setItems(PasswordSets);
             update();
         } catch (IOException e) {
@@ -95,7 +101,7 @@ public class MainScreenController implements Initializable {
     }
 
     public void deletePasswordSet(ActionEvent actionEvent) {
-        apiCallService.deletePasswordSet(tvPasswordSet.getSelectionModel().getSelectedItem());
+        apiCallService.deletePasswordSet(tvPasswordSet.getSelectionModel().getSelectedItem(), session);
         update();
     }
 
@@ -104,7 +110,7 @@ public class MainScreenController implements Initializable {
         tvPasswordSet.getSelectionModel().getSelectedItem().setTitle(txtTitle.getText());
         tvPasswordSet.getSelectionModel().getSelectedItem().setWebsiteUrl(txtUrl.getText());
         tvPasswordSet.getSelectionModel().getSelectedItem().setDescription(txtDescription.getText());
-        apiCallService.updatePasswordSet(tvPasswordSet.getSelectionModel().getSelectedItem());
+        apiCallService.updatePasswordSet(tvPasswordSet.getSelectionModel().getSelectedItem(), session);
         update();
     }
 
@@ -129,11 +135,11 @@ public class MainScreenController implements Initializable {
 
     public void generatePassword(ActionEvent actionEvent) {
         if (rbGetRandomHexKey.isSelected() && !cbBitSize.getSelectionModel().isSelected(-1)){
-            lvGeneratedPassword.getItems().add(apiCallService.getGeneratedHexKey(Integer.parseInt(cbBitSize.getValue().toString())));
+            lvGeneratedPassword.getItems().add(apiCallService.getGeneratedHexKey(Integer.parseInt(cbBitSize.getValue().toString()), session).getBody());
         }
         else if (rbGetPasswordByUserSpecification.isSelected()){
             lvGeneratedPassword.getItems().add(apiCallService.getGeneratedPasswordByUserSpecification(cbUpperCase.isSelected(), cbLowerCase.isSelected(),
-                    cbSpecialChar.isSelected(), cbDigits.isSelected(), (Integer)spPasswordLength.getValue()));
+                    cbSpecialChar.isSelected(), cbDigits.isSelected(), (Integer)spPasswordLength.getValue(), session).getBody());
         }
         else {
             alert.setTitle("Selection chosen");

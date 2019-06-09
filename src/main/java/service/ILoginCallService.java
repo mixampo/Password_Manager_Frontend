@@ -1,7 +1,8 @@
 package service;
 
+import models.Session;
 import models.User;
 
 public interface ILoginCallService {
-    Boolean loginAndAuthenticate(String userName, String password);
+    Session login(String username, String password);
 }

@@ -9,22 +9,47 @@ public class User {
     @JsonProperty("id")
     private int id;
 
-    @JsonProperty("userName")
-    private String userName;
+    @JsonProperty("username")
+    private String username;
 
     @JsonProperty("password")
     private String password;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public User(){}
 
     public User(int id, String userName, String password){
         this.id = id;
-        this.userName = userName;
+        this.username = userName;
         this.password = password;
     }
 
     public User(String userName, String password){
-        this.userName = userName;
+        this.username = userName;
         this.password = password;
     }
+
 }
