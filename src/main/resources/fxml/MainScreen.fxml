@@ -15,7 +15,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="577.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainScreenController">
+<AnchorPane prefHeight="492.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainScreenController">
     <children>
         <TabPane layoutY="-1.0" prefHeight="504.0" prefWidth="748.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -76,6 +76,19 @@
                      </children>
                   </AnchorPane>
               </content>
+            </Tab>
+            <Tab text="Costumer service">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="497.0" prefWidth="748.0">
+                     <children>
+                        <ListView fx:id="lvCostumerServiceMessages" layoutX="13.0" layoutY="83.0" prefHeight="314.0" prefWidth="722.0" />
+                        <Button fx:id="btnConnectToCostumerService" layoutX="14.0" layoutY="411.0" mnemonicParsing="false" onAction="#connectToCostumerService" prefHeight="31.0" prefWidth="169.0" text="Connect to service" />
+                        <TextField fx:id="txtMessage" layoutX="14.0" layoutY="25.0" prefHeight="31.0" prefWidth="573.0" />
+                        <Button fx:id="btnSendMessage" layoutX="611.0" layoutY="25.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="31.0" prefWidth="123.0" text="Send message" />
+                        <Button fx:id="btnDisconnectFromCostumerService" layoutX="546.0" layoutY="411.0" mnemonicParsing="false" onAction="#disconnectFromCostumerService" prefHeight="31.0" prefWidth="188.0" text="Disconnect from service" />
+                     </children>
+                  </AnchorPane>
+               </content>
             </Tab>
             </tabs>
         </TabPane>

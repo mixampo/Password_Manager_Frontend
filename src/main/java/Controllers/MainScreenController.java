@@ -3,23 +3,18 @@ package Controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import models.PasswordSet;
 import models.Session;
-import org.springframework.beans.PropertyValue;
 import service.ApiCallService;
 import service.IApiCallService;
-
-import javax.net.ssl.HttpsURLConnection;
+import websocket.ClientHandler;
+import websocket.IClientHandler;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
@@ -51,7 +46,13 @@ public class MainScreenController implements Initializable {
     public CheckBox cbSpecialChar;
     public ChoiceBox cbBitSize;
     public Spinner spPasswordLength;
+    public ListView lvCostumerServiceMessages;
+    public Button btnConnectToCostumerService;
+    public TextField txtMessage;
+    public Button btnSendMessage;
+    public Button btnDisconnectFromCostumerService;
 
+    private IClientHandler clientHandler = new ClientHandler();
     private IApiCallService apiCallService = new ApiCallService();
     private ObservableList<PasswordSet> PasswordSets;
     private Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -70,6 +71,7 @@ public class MainScreenController implements Initializable {
         SpinnerValueFactory<Integer> valueFactory = //
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 50, initialValue);
         spPasswordLength.setValueFactory(valueFactory);
+        btnDisconnectFromCostumerService.setDisable(true);
     }
 
     public void initSession(Session session){
@@ -198,13 +200,46 @@ public class MainScreenController implements Initializable {
         rbGetPasswordByUserSpecification.setSelected(false);
     }
 
-    public void update(){
+    public void connectToCostumerService(ActionEvent actionEvent) {
+        clientHandler.connect(session.getUser(), this);
+        btnConnectToCostumerService.setDisable(true);
+        btnDisconnectFromCostumerService.setDisable(false);
+    }
+
+    public void disconnectFromCostumerService(ActionEvent actionEvent) {
+        clientHandler.disconnect(session.getUser());
+        btnConnectToCostumerService.setDisable(false);
+        btnDisconnectFromCostumerService.setDisable(true);
+        lvCostumerServiceMessages.getItems().clear();
+    }
+
+    public void sendMessage(ActionEvent actionEvent) {
+        if (!txtMessage.getText().equals("")){
+                //clientHandler.getSession().getBasicRemote().sendText(session.getUser().getUsername() + ":" + " " + txtMessage.getText());
+                clientHandler.sendMessage(session.getUser().getUsername() + ": " + txtMessage.getText());
+            update();
+        }
+        else{
+            alert.setTitle("No message to send");
+            alert.setHeaderText(null);
+            alert.setContentText("Write a message before sending it");
+
+            alert.showAndWait();
+        }
+    }
+
+    public void receiveMessage(String message){
+        lvCostumerServiceMessages.getItems().add(message);
+    }
+
+    private void update(){
         txtPassword.clear();
         txtTitle.clear();
         txtUrl.clear();
         txtDescription.clear();
         btnUpdateEditedPassword.setDisable(true);
         btnAddPasswordToDb.setDisable(false);
+        txtMessage.clear();
         //lblPasswordAdded.setText("");
     }
 }
