@@ -1,6 +1,7 @@
 package websocket;
 
 import Controllers.MainScreenController;
+import models.Message;
 import models.User;
 import org.eclipse.jetty.util.component.LifeCycle;
 
@@ -26,7 +27,7 @@ public class ClientHandler implements IClientHandler {
     }
 
     public void connect(User user, MainScreenController mainScreenController){
-        URI uri = URI.create("ws://localhost:8095/chat/");
+        URI uri = URI.create("ws://localhost:8095/chat/" + user.getUsername());
         try {
             container = ContainerProvider.getWebSocketContainer();
             try {
@@ -42,7 +43,7 @@ public class ClientHandler implements IClientHandler {
     }
     public void disconnect(User user){
         try {
-            session.close(new CloseReason(CloseReason.CloseCodes.NORMAL_CLOSURE, user.getUsername() + " disconnected from service"));
+            session.close(new CloseReason(CloseReason.CloseCodes.NORMAL_CLOSURE, new Message(user, " disconnected from service").toString()));
         } catch (IOException e) {
             e.printStackTrace();
         }

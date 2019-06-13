@@ -28,7 +28,9 @@ public class LoginScreenController implements Initializable {
     public TextField txtUsername;
     public PasswordField txtPassword;
     public Button btnLogin;
+    public Button btnRegister;
 
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
     private ILoginCallService loginCallService = new LoginCallService();
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,14 +55,42 @@ public class LoginScreenController implements Initializable {
                 window.setScene(mainScreenScene);
                 window.show();
             }
+            else {
+                update();
+                alert.setTitle("Wrong credentials");
+                alert.setHeaderText(null);
+                alert.setContentText("Invalid username/password supplied");
+                alert.showAndWait();
+            }
         }
         else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Wrong credentials");
+            update();
+            alert.setTitle("No credentials");
             alert.setHeaderText(null);
-            alert.setContentText("The username and or password you gave is/are incorrect!");
-
+            alert.setContentText("No username/password supplied");
             alert.showAndWait();
         }
+    }
+
+    private void update(){
+        txtUsername.clear();
+        txtPassword.clear();
+    }
+
+    public void goToRegisterScreen(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getClassLoader().getResource("fxml/RegisterScreen.fxml"));
+        Parent mainScreenParent = null;
+        try {
+            mainScreenParent = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene mainScreenScene = new Scene(mainScreenParent);
+
+        //Get stage information
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        window.setScene(mainScreenScene);
+        window.show();
     }
 }

@@ -1,5 +1,6 @@
 package Controllers;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import models.Message;
 import models.PasswordSet;
 import models.Session;
 import service.ApiCallService;
@@ -72,6 +74,7 @@ public class MainScreenController implements Initializable {
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 50, initialValue);
         spPasswordLength.setValueFactory(valueFactory);
         btnDisconnectFromCostumerService.setDisable(true);
+        btnSendMessage.setDisable(true);
     }
 
     public void initSession(Session session){
@@ -201,22 +204,25 @@ public class MainScreenController implements Initializable {
     }
 
     public void connectToCostumerService(ActionEvent actionEvent) {
+        lvCostumerServiceMessages.getItems().clear();
         clientHandler.connect(session.getUser(), this);
         btnConnectToCostumerService.setDisable(true);
         btnDisconnectFromCostumerService.setDisable(false);
+        btnSendMessage.setDisable(false);
     }
 
     public void disconnectFromCostumerService(ActionEvent actionEvent) {
         clientHandler.disconnect(session.getUser());
         btnConnectToCostumerService.setDisable(false);
         btnDisconnectFromCostumerService.setDisable(true);
+        btnSendMessage.setDisable(true);
         lvCostumerServiceMessages.getItems().clear();
+        update();
     }
 
     public void sendMessage(ActionEvent actionEvent) {
         if (!txtMessage.getText().equals("")){
-                //clientHandler.getSession().getBasicRemote().sendText(session.getUser().getUsername() + ":" + " " + txtMessage.getText());
-                clientHandler.sendMessage(session.getUser().getUsername() + ": " + txtMessage.getText());
+            clientHandler.sendMessage(new Message(session.getUser(), txtMessage.getText()).toString());
             update();
         }
         else{
@@ -229,7 +235,12 @@ public class MainScreenController implements Initializable {
     }
 
     public void receiveMessage(String message){
-        lvCostumerServiceMessages.getItems().add(message);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                lvCostumerServiceMessages.getItems().add(message);
+            }
+        });
     }
 
     private void update(){
@@ -240,6 +251,7 @@ public class MainScreenController implements Initializable {
         btnUpdateEditedPassword.setDisable(true);
         btnAddPasswordToDb.setDisable(false);
         txtMessage.clear();
+        //lvCostumerServiceMessages.getItems().clear();
         //lblPasswordAdded.setText("");
     }
 }

@@ -25,7 +25,7 @@ public class ClientEndpoint {
         mainScreenController.receiveMessage(message);
     }
     @OnClose
-    public void onWebsocketClose(CloseReason reason) { mainScreenController.receiveMessage("[Closed]: " + reason.getReasonPhrase()); }
+    public void onWebsocketClose(CloseReason reason) { mainScreenController.receiveMessage("[Disconnected]: " + this.user.getUsername()); }
     @OnError
-    public void onWebsocketError(Throwable cause) {System.out.println("[Error]: " + cause.getMessage());}
+    public void onWebsocketError(Throwable cause) {mainScreenController.receiveMessage("[Error]: " + cause.getMessage());}
 }

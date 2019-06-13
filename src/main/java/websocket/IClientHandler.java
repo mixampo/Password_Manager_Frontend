@@ -1,6 +1,7 @@
 package websocket;
 
 import Controllers.MainScreenController;
+import models.Message;
 import models.User;
 
 import javax.websocket.Session;

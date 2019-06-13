@@ -13,6 +13,7 @@
       <Label layoutX="22.0" layoutY="64.0" text="Username" />
       <PasswordField fx:id="txtPassword" layoutX="127.0" layoutY="117.0" prefHeight="31.0" prefWidth="177.0" />
       <Label layoutX="22.0" layoutY="122.0" text="Password" />
-      <Button fx:id="btnLogin" layoutX="143.0" layoutY="172.0" mnemonicParsing="false" onAction="#login" text="Login" />
+      <Button fx:id="btnLogin" layoutX="57.0" layoutY="172.0" mnemonicParsing="false" onAction="#login" text="Login" />
+      <Button fx:id="btnRegister" layoutX="230.0" layoutY="172.0" mnemonicParsing="false" onAction="#goToRegisterScreen" prefHeight="31.0" prefWidth="91.0" text="Register" />
    </children>
 </AnchorPane>
